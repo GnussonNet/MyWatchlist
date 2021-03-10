@@ -15,6 +15,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace MyWatchlist
 {
@@ -23,10 +25,33 @@ namespace MyWatchlist
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
             StateChanged += MainWindowStateChangeRaised;
+
+            // The folder for the roaming current user 
+            // Combine the base folder with your specific folder....
+            // CreateDirectory will check if folder exists and, if not, create it.
+            // If folder exists then CreateDirectory will do nothing.
+            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist");
+            Directory.CreateDirectory(System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist"));
+
+            XmlDocument document = new XmlDocument();
+            if (!File.Exists(xmlFilePath + "\\data.xml"))
+            {
+                document.LoadXml("<?xml version=\"1.0\" encoding=\"UTF-8\"?><WATCHLISTS></WATCHLISTS>");
+                document.Save(xmlFilePath + "\\data.xml");
+                MessageBox.Show("File created!");
+            }
+            else
+            {
+                MessageBox.Show("File exists!");
+                document.Load(xmlFilePath + "\\data.xml");
+            }
+            GetWatchlist();
+
         }
 
         #region --- ChromeWindow ---
@@ -80,61 +105,13 @@ namespace MyWatchlist
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
-            // Set filter to Json only
-            OpenFileDialog oFD = new OpenFileDialog();
-            oFD.Filter = "Json files (*.json)|*.json";
-            oFD.FilterIndex = 2;
-
-            // If dialog result is ok
-            if (oFD.ShowDialog() == true)
-            {
-                cbLists.Items.Clear();
-                lstStocks.Items.Clear();
-
-                // Open file
-                StreamReader sr = new StreamReader(oFD.FileName);
-
-                // Add json to a string 
-                string json = sr.ReadToEnd();
-
-                // Deserialize json to two lists (1 for watchlists and 1 for stocks in the watchlist)
-                List<List<WatchList>> IdListList = JsonConvert.DeserializeObject<List<List<WatchList>>>(json);
-
-                // For every watchlist arrays
-                for (int i = 0; i < IdListList.Count; i++)
-                {
-                    // For every object in the arrays (always 1)
-                    for (int x = 0; x < IdListList[i].Count; x++)
-                    {
-                        // Add new root node for every watchlist in arrays (x could be replaced with a hard coded "0")
-                        cbLists.Items.Add(IdListList[i][x].list);
-
-                        //WatchList = new WatchList();
-
-                        // For every stock in stocks array
-                        for (int y = 0; y < IdListList[i][x].stocks.Count; y++)
-                        {
-
-
-                            // This is for every stock
-                            lstStocks.Items.Add(IdListList[i][x].stocks[y].stock);
-
-
-                            //// Add every stock in stocks array to a node-level 1 in respective parent
-                            //tvLists.Nodes[i].Nodes.Add(IdListList[i][x].stocks[y].stock);
-
-                            //// Add every quantity and avgPrice to a node-level 2 in respective parant
-                            //tvLists.Nodes[i].Nodes[y].Nodes.Add(IdListList[i][x].stocks[y].quantity);
-                            //tvLists.Nodes[i].Nodes[y].Nodes.Add(IdListList[i][x].stocks[y].avgPrice);
-                        }
-                    }
-                }
-            }
+           
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-
+            //GetWatchlist();
+            //AddWatchlist();
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -165,25 +142,76 @@ namespace MyWatchlist
         {
 
         }
+
+        void GetWatchlist()
+        {
+            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+            var xdoc = XDocument.Load(xmlFilePath);
+
+            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(int.Parse(x.Attribute("id").Value), x.Element("NAME").Value));
+
+            foreach (var watchlist in watchlists)
+            {
+                cbLists.Items.Add(watchlist.name);
+            }
+        }
+
+        void AddWatchlist()
+        {
+            //var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+            //var xdoc = XDocument.Load(xmlFilePath);
+            //var xelement = new XElement("WATCHLIST", new XAttribute("id", watchlist.id), new XElement("NAME", watchlist.name));
+            //xdoc.Root.Add(xelement);
+            //xdoc.Save(xmlFilePath);
+
+            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+            var xdoc = XDocument.Load(xmlFilePath);
+
+            var xelement = new XElement("WATCHLIST", new XAttribute("id", "1"), new XElement("NAME", "My Watchlist"), new XElement("STOCKS", new XElement("STOCK", new XElement("NAME", "SNES"), new XElement("AVGPRICE", "2.14"), new XElement("SHARES", "121"))));
+            xdoc.Root.Add(xelement);
+            xdoc.Save(xmlFilePath);
+
+        }
     }
 
-    /// <summary>
-    /// Object classes
-    /// </summary>
-    #region -- Object Classes --
 
-    // Object for all watchlists and their stocks
-    public class WatchList
+    public class Watchlist
     {
-        public string list { get; set; }
-        public List<WatchListStocks> stocks { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+
+        public Watchlist(int _id, string _name)
+        {
+            id = _id;
+            name = _name;
+        }
     }
 
-    public class WatchListStocks
+    public class Watchlist1
     {
-        public string stock { get; set; }
-        public string quantity { get; set; }
-        public string avgPrice { get; set; }
+        public int id { get; set; }
+        public string name { get; set; }
+        public List<WatchlistStocks> stocks { get; set; }
+
+        public Watchlist1(int _id, string _name, List<WatchlistStocks> _stocks)
+        {
+            id = _id;
+            name = _name;
+            stocks = _stocks;
+        }
     }
-    #endregion
+
+    public class WatchlistStocks
+    {
+        public string name { get; set; }
+        public double avgPrice { get; set; }
+        public int shares { get; set; }
+
+        public WatchlistStocks(string _name, double _avgPrice, int _shares)
+        {
+            name = _name;
+            avgPrice = _avgPrice;
+            shares = _shares;
+        }
+    }
 }
