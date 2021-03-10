@@ -1,0 +1,17 @@
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\MyWatchlist.exe.config
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\MyWatchlist.exe
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\MyWatchlist.pdb
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csprojAssemblyReference.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MainWindow.g.cs
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\App.g.cs
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist_MarkupCompile.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist_MarkupCompile.lref
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MainWindow.baml
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.g.resources
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.Properties.Resources.resources
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csproj.GenerateResource.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.exe
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.pdb
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csproj.CopyComplete
