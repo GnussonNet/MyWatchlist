@@ -1,7 +1,7 @@
 # MyWatchlist
  A simple watchlist application which tracks your choosen stocks.
  
- ## Features comming soon
+ ## Upcoming features
  * Popup to add stock
  * Delete watchlist only if the list is empty
 
