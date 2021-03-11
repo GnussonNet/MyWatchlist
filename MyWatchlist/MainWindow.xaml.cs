@@ -124,17 +124,14 @@ namespace MyWatchlist
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
-
-            //RemoveWatchlistStock();
-            //GetWatchListStocks();
-
             if (lstStocks.SelectedItem != null)
             {
-                lstStocks.Items.Remove(lstStocks.SelectedItem);
+                WatchlistStocks stock = (WatchlistStocks)lstStocks.SelectedItems[0];
+                RemoveWatchlistStock(stock.ticker, stock.watchlist);
+                GetWatchListStocks();
             }
             else if (lstStocks.Items.Count == 0)
             {
-
                 cbLists.Items.Remove(cbLists.SelectedItem);
             }
         }
@@ -157,6 +154,7 @@ namespace MyWatchlist
         private void cbLists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             dgStocks.Items.Refresh();
+            lstStocks.Items.Refresh();
             GetWatchListStocks();
         }
 
@@ -178,7 +176,7 @@ namespace MyWatchlist
 
         void GetWatchListStocks()
         {
-            lstStocks.Items.Clear();
+            //lstStocks.Items.Clear();
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             var xdoc = XDocument.Load(xmlFilePath);
 
@@ -192,10 +190,12 @@ namespace MyWatchlist
             {
                 if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
                 {
-                    lstStocks.Items.Add(stock.name);
+                    //lstStocks.Items.Add(stock.name);
                     wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist));
+                    lstStocks.ItemsSource = wlStocks;
                     dgStocks.ItemsSource = wlStocks;
                     dgStocks.Items.Refresh();
+                    lstStocks.Items.Refresh();
                 }
             }
         }
@@ -227,16 +227,16 @@ namespace MyWatchlist
             xdoc.Save(xmlFilePath);
         }
 
-        void RemoveWatchlistStock()
+        void RemoveWatchlistStock(string ticker, string watchlist)
         {
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             var xdoc = XDocument.Load(xmlFilePath);
 
             xdoc.Root.Elements("WATCHLIST").Where(e =>
-                e.Element("NAME").Value == cbLists.SelectedItem.ToString()).Single()
+                e.Element("NAME").Value == watchlist).Single()
                 .Element("STOCKS")
                 .Elements("STOCK").Where(e =>
-                e.Element("TICKER").Value == "ZAP").Single().Remove();
+                e.Element("TICKER").Value == ticker).Single().Remove();
             xdoc.Save(xmlFilePath);
         }
     }
@@ -281,6 +281,11 @@ namespace MyWatchlist
             avgPrice = _avgPrice;
             shares = _shares;
             watchlist = _watchlist;
+        }
+
+        public override string ToString()
+        {
+            return this.name.ToString();
         }
     }
 }
