@@ -105,7 +105,7 @@ namespace MyWatchlist
 
         private void btnOpen_Click(object sender, RoutedEventArgs e)
         {
-           
+            MessageBox.Show(cbLists.SelectedItem.ToString());
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -140,7 +140,7 @@ namespace MyWatchlist
 
         private void cbLists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            GetWatchListStocks();
         }
 
         void GetWatchlist()
@@ -150,9 +150,28 @@ namespace MyWatchlist
 
             var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(int.Parse(x.Attribute("id").Value), x.Element("NAME").Value));
 
+            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+
             foreach (var watchlist in watchlists)
             {
                 cbLists.Items.Add(watchlist.name);
+            }
+        }
+
+        void GetWatchListStocks()
+        {
+            lstStocks.Items.Clear();
+            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+            var xdoc = XDocument.Load(xmlFilePath);
+
+            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(int.Parse(x.Attribute("id").Value), x.Element("NAME").Value));
+
+            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+
+            foreach (var stock in stocks)
+            {
+                if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
+                    lstStocks.Items.Add(stock.name);
             }
         }
 
@@ -206,12 +225,14 @@ namespace MyWatchlist
         public string name { get; set; }
         public double avgPrice { get; set; }
         public int shares { get; set; }
+        public string watchlist { get; set; }
 
-        public WatchlistStocks(string _name, double _avgPrice, int _shares)
+        public WatchlistStocks(string _name, double _avgPrice, int _shares, string _watchlist)
         {
             name = _name;
             avgPrice = _avgPrice;
             shares = _shares;
+            watchlist = _watchlist;
         }
     }
 }
