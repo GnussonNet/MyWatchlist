@@ -125,10 +125,6 @@
 
             <!--App content-->
             <Grid Background="#fcfcfc" Grid.Row="1" x:Name="AppArea">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="128*"/>
-                    <ColumnDefinition Width="317*"/>
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="40px" />
                     <RowDefinition Height="*" />
@@ -169,7 +165,7 @@
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="250px" />
+                        <ColumnDefinition Width="200px" MinWidth="150" MaxWidth="350" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
@@ -218,9 +214,26 @@
                     <GridSplitter Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="#7F005DA7"/>
 
                     <!-- Datagrid -->
-                    <Grid Grid.Row="1" Grid.Column="1" Margin="10">
-
-                    </Grid>
+                    <DataGrid x:Name="dgStocks" IsEnabled="False" HorizontalGridLinesBrush="{DynamicResource Header}" VerticalGridLinesBrush="{DynamicResource Header}" RowHeaderWidth="0" AutoGenerateColumns="False"  Grid.Row="1" Grid.Column="1" Margin="10 10 0 10" BorderBrush="{DynamicResource Header}" BorderThickness="0" Background="{DynamicResource Background}" SelectedIndex="0">
+                        <DataGrid.Resources>
+                            <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
+                                <Setter Property="Background" Value="{DynamicResource Header}" />
+                                <Setter Property="Foreground" Value="{DynamicResource Background}" />
+                                <Setter Property="BorderBrush" Value="#3EFFFFFF"/>
+                                <Setter Property="BorderThickness" Value="1 1 1 1"/>
+                                <Setter Property="Margin" Value="-1,-1,0,0" />
+                                <Setter Property="Height" Value="28" />
+                                <Setter Property="Width" Value="auto"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            </Style>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" Width="100"/>
+                            <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" Width="100"/>
+                            <DataGridTextColumn Header="Avg. Price" Binding="{Binding Path=avgPrice}" Width="100"/>
+                            <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" Width="100"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
                 </Grid>
             </Grid>

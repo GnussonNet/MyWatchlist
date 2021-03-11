@@ -26,6 +26,8 @@ namespace MyWatchlist
     public partial class MainWindow : Window
     {
 
+        List<WatchlistStocks> wlStocks = new List<WatchlistStocks>();
+
         public MainWindow()
         {
             InitializeComponent();
@@ -43,11 +45,11 @@ namespace MyWatchlist
             {
                 document.LoadXml("<?xml version=\"1.0\" encoding=\"UTF-8\"?><WATCHLISTS></WATCHLISTS>");
                 document.Save(xmlFilePath + "\\data.xml");
-                MessageBox.Show("File created!");
+                //MessageBox.Show("File created!");
             }
             else
             {
-                MessageBox.Show("File exists!");
+                //MessageBox.Show("File exists!");
                 document.Load(xmlFilePath + "\\data.xml");
             }
             GetWatchlist();
@@ -116,14 +118,24 @@ namespace MyWatchlist
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            lstStocks.Items.Add("Test Stock");
+            AddWatchlistStock();
+            GetWatchListStocks();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
         {
+
+            //RemoveWatchlistStock();
+            //GetWatchListStocks();
+
             if (lstStocks.SelectedItem != null)
             {
                 lstStocks.Items.Remove(lstStocks.SelectedItem);
+            }
+            else if (lstStocks.Items.Count == 0)
+            {
+
+                cbLists.Items.Remove(cbLists.SelectedItem);
             }
         }
 
@@ -134,23 +146,29 @@ namespace MyWatchlist
 
         private void btnAddWL_Click(object sender, RoutedEventArgs e)
         {
-            cbLists.Items.Add(txtNewList.Text);
-            cbLists.SelectedIndex = cbLists.Items.Count - 1;
+            if (!string.IsNullOrWhiteSpace(txtNewList.Text))
+            {
+                AddWatchlist(txtNewList.Text);
+                GetWatchlist();
+                cbLists.SelectedIndex = cbLists.Items.Count - 1;
+            }
         }
 
         private void cbLists_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            dgStocks.Items.Refresh();
             GetWatchListStocks();
         }
 
         void GetWatchlist()
         {
+            cbLists.Items.Clear();
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             var xdoc = XDocument.Load(xmlFilePath);
 
-            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(int.Parse(x.Attribute("id").Value), x.Element("NAME").Value));
+            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(x.Element("NAME").Value));
 
-            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, x.Element("TICKER").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
 
             foreach (var watchlist in watchlists)
             {
@@ -164,18 +182,25 @@ namespace MyWatchlist
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             var xdoc = XDocument.Load(xmlFilePath);
 
-            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(int.Parse(x.Attribute("id").Value), x.Element("NAME").Value));
+            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(x.Element("NAME").Value));
 
-            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, x.Element("TICKER").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+
+            wlStocks.Clear();
 
             foreach (var stock in stocks)
             {
                 if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
+                {
                     lstStocks.Items.Add(stock.name);
+                    wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist));
+                    dgStocks.ItemsSource = wlStocks;
+                    dgStocks.Items.Refresh();
+                }
             }
         }
 
-        void AddWatchlist()
+        void AddWatchlist(string name)
         {
             //var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             //var xdoc = XDocument.Load(xmlFilePath);
@@ -186,22 +211,43 @@ namespace MyWatchlist
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             var xdoc = XDocument.Load(xmlFilePath);
 
-            var xelement = new XElement("WATCHLIST", new XAttribute("id", "1"), new XElement("NAME", "My Watchlist"), new XElement("STOCKS", new XElement("STOCK", new XElement("NAME", "SNES"), new XElement("AVGPRICE", "2.14"), new XElement("SHARES", "121"))));
+            var xelement = new XElement("WATCHLIST", new XElement("NAME", name), new XElement("STOCKS"));
             xdoc.Root.Add(xelement);
             xdoc.Save(xmlFilePath);
 
+        }
+
+        void AddWatchlistStock()
+        {
+            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+            var xdoc = XDocument.Load(xmlFilePath);
+
+            var xelement = new XElement(new XElement("STOCK", new XAttribute("list", cbLists.SelectedItem.ToString()), new XElement("NAME", "Zaptec"), new XElement("TICKER", "ZAP"), new XElement("AVGPRICE", "52,13"), new XElement("SHARES", "30")));
+            xdoc.Root.Elements("WATCHLIST").Where(e => e.Element("NAME").Value == cbLists.SelectedItem.ToString()).Single().Element("STOCKS").Add(xelement);
+            xdoc.Save(xmlFilePath);
+        }
+
+        void RemoveWatchlistStock()
+        {
+            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+            var xdoc = XDocument.Load(xmlFilePath);
+
+            xdoc.Root.Elements("WATCHLIST").Where(e =>
+                e.Element("NAME").Value == cbLists.SelectedItem.ToString()).Single()
+                .Element("STOCKS")
+                .Elements("STOCK").Where(e =>
+                e.Element("TICKER").Value == "ZAP").Single().Remove();
+            xdoc.Save(xmlFilePath);
         }
     }
 
 
     public class Watchlist
     {
-        public int id { get; set; }
         public string name { get; set; }
 
-        public Watchlist(int _id, string _name)
+        public Watchlist(string _name)
         {
-            id = _id;
             name = _name;
         }
     }
@@ -223,13 +269,15 @@ namespace MyWatchlist
     public class WatchlistStocks
     {
         public string name { get; set; }
+        public string ticker { get; set; }
         public double avgPrice { get; set; }
         public int shares { get; set; }
         public string watchlist { get; set; }
 
-        public WatchlistStocks(string _name, double _avgPrice, int _shares, string _watchlist)
+        public WatchlistStocks(string _name, string _ticker, double _avgPrice, int _shares, string _watchlist)
         {
             name = _name;
+            ticker = _ticker;
             avgPrice = _avgPrice;
             shares = _shares;
             watchlist = _watchlist;
