@@ -112,8 +112,7 @@ namespace MyWatchlist
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            //GetWatchlist();
-            //AddWatchlist();
+
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
@@ -132,7 +131,7 @@ namespace MyWatchlist
             }
             else if (lstStocks.Items.Count == 0)
             {
-                cbLists.Items.Remove(cbLists.SelectedItem);
+                cbLists.Items.Remove(cbLists.SelectedItem); 
             }
         }
 
@@ -202,19 +201,12 @@ namespace MyWatchlist
 
         void AddWatchlist(string name)
         {
-            //var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
-            //var xdoc = XDocument.Load(xmlFilePath);
-            //var xelement = new XElement("WATCHLIST", new XAttribute("id", watchlist.id), new XElement("NAME", watchlist.name));
-            //xdoc.Root.Add(xelement);
-            //xdoc.Save(xmlFilePath);
-
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
             var xdoc = XDocument.Load(xmlFilePath);
 
             var xelement = new XElement("WATCHLIST", new XElement("NAME", name), new XElement("STOCKS"));
             xdoc.Root.Add(xelement);
             xdoc.Save(xmlFilePath);
-
         }
 
         void AddWatchlistStock()
@@ -252,19 +244,6 @@ namespace MyWatchlist
         }
     }
 
-    public class Watchlist1
-    {
-        public int id { get; set; }
-        public string name { get; set; }
-        public List<WatchlistStocks> stocks { get; set; }
-
-        public Watchlist1(int _id, string _name, List<WatchlistStocks> _stocks)
-        {
-            id = _id;
-            name = _name;
-            stocks = _stocks;
-        }
-    }
 
     public class WatchlistStocks
     {
