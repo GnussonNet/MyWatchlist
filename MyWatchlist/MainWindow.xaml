@@ -86,7 +86,7 @@
             <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
             <SolidColorBrush x:Key="ComboBoxDisabledBackgroundBrush" Color="#eee" />
             <SolidColorBrush x:Key="ComboBoxDisabledBorderBrush" Color="#888" />
- 
+
             <ControlTemplate TargetType="ToggleButton" x:Key="ComboBoxToggleButtonTemplate">
                 <Grid Height="28">
                     <Grid.ColumnDefinitions>
@@ -114,7 +114,7 @@
                     </Trigger>
                 </ControlTemplate.Triggers>
             </ControlTemplate>
-                
+
             <Style x:Key="ItemStyle" TargetType="{x:Type ComboBoxItem}">
                 <Setter Property="Template">
                     <Setter.Value>
@@ -182,6 +182,64 @@
                                     <Setter Property="KeyboardNavigation.IsTabStop" Value="False"/>
                                     <Setter Property="UIElement.Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
                                     <Setter Property="UIElement.Visibility" TargetName="ContentSite" Value="Hidden"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <SolidColorBrush x:Key="Item.MouseOver.Background" Color="#005DA7"/>
+            <SolidColorBrush x:Key="Item.MouseOver.Border" Color="#a826A0Da"/>
+            <SolidColorBrush x:Key="Item.SelectedInactive.Background" Color="#005DA7"/>
+            <SolidColorBrush x:Key="Item.SelectedInactive.Border" Color="#FFDADADA"/>
+            <SolidColorBrush x:Key="Item.SelectedActive.Background" Color="#005DA7"/>
+            <SolidColorBrush x:Key="Item.SelectedActive.Border" Color="#FF26A0DA"/>
+
+            <Style x:Key="ListViewContainerStyle" TargetType="{x:Type ListViewItem}">
+                <Setter Property="SnapsToDevicePixels" Value="True"/>
+                <Setter Property="Padding" Value="4"/>
+                <Setter Property="Margin" Value="0"/>
+                <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource AncestorType={x:Type ItemsControl}}}"/>
+                <Setter Property="Background" Value="Transparent"/>
+                <Setter Property="BorderBrush" Value="Transparent"/>
+                <Setter Property="BorderThickness" Value="0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type ListViewItem}">
+                            <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="true">
+                                <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.MouseOver.Background}"/>
+                                    <Setter Property="TextElement.Foreground" TargetName="Bd" Value="White"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.MouseOver.Border}"/>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Selector.IsSelectionActive" Value="False"/>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Background}"/>
+                                    <Setter Property="TextElement.Foreground" TargetName="Bd" Value="White"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedInactive.Border}"/>
+                                </MultiTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="Selector.IsSelectionActive" Value="True"/>
+                                        <Condition Property="IsSelected" Value="True"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Background}"/>
+                                    <Setter Property="TextElement.Foreground" TargetName="Bd" Value="White"/>
+                                    <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource Item.SelectedActive.Border}"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter Property="TextElement.Foreground" TargetName="Bd" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
@@ -426,14 +484,16 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
                                 <RowDefinition Height="auto" />
+                                <RowDefinition Height="auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
 
                             <Label Content="Watchlists" Padding="0,5,5,5"></Label>
                             <ComboBox x:Name="cbLists" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Row="1" SelectionChanged="cbLists_SelectionChanged" SelectedIndex="0"/>
 
-                            <ListView x:Name="lstStocks" Grid.Row="2" BorderThickness="0" Margin="0 10 0 0">
-
+                            <Label Content="Stocks" Grid.Row="2" Margin="0 10 0 0" Padding="0,5,5,5"></Label>
+                            <ListView x:Name="lstStocks" Grid.Row="3" BorderThickness="0" ItemContainerStyle="{DynamicResource ListViewContainerStyle}">
+                                <!--<ListViewItem>Hej</ListViewItem>-->
                             </ListView>
 
                         </Grid>
