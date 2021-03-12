@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<WATCHLISTS>
+  <WATCHLIST id="0">
+    <NAME>My Portfolio</NAME>
+    <STOCKS>
+      <STOCK list="My Portfolio">
+        <NAME>SenesTech Inc</NAME>
+        <TICKER>SNES</TICKER>
+        <AVGPRICE>2,14</AVGPRICE>
+        <SHARES>121</SHARES>
+      </STOCK>
+      <STOCK list="My Portfolio">
+        <NAME>Zaptec AS</NAME>
+        <TICKER>ZAP.OL</TICKER>
+        <AVGPRICE>32,13</AVGPRICE>
+        <SHARES>150</SHARES>
+      </STOCK>
+    </STOCKS>
+  </WATCHLIST>
+  <WATCHLIST id="1">
+    <NAME>My Watchlist</NAME>
+    <STOCKS>
+      <STOCK list="My Watchlist">
+        <NAME>Clas Ohlson</NAME>
+        <TICKER>CLAS B</TICKER>
+        <AVGPRICE>50,01</AVGPRICE>
+        <SHARES>20</SHARES>
+      </STOCK>
+      <STOCK list="My Watchlist">
+        <NAME>Gamestop</NAME>
+        <TICKER>GME</TICKER>
+        <AVGPRICE>20,21</AVGPRICE>
+        <SHARES>2</SHARES>
+      </STOCK>
+    </STOCKS>
+  </WATCHLIST>
+</WATCHLISTS>

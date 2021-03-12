@@ -151,7 +151,7 @@
                         <ColumnDefinition Width="10" />
                     </Grid.ColumnDefinitions>
 
-                    <Button x:Name="btnOpen" Grid.Row="1" Grid.Column="1" Click="btnOpen_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE8E5;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Foreground="#FFFCFCFC" Cursor="Hand" Background="{x:Null}" BorderBrush="{x:Null}"></Button>
+                    <Button x:Name="btnOpen" Grid.Column="1" Click="btnOpen_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE8E5;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Background="{x:Null}" Foreground="#FFFCFCFC" Cursor="Hand" Margin="1,0,0,0" Grid.Row="1"></Button>
                     <Button x:Name="btnSave" Grid.Row="1" Grid.Column="3" Click="btnSave_Click" FontFamily="Segoe MDL2 Assets" Content="&#xE74E;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Top" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFCFCFC" Margin="1,0,0,0"></Button>
                     <Button x:Name="btnAdd" Grid.Row="1" Grid.Column="5" Click="btnAdd_Click" FontFamily="Segoe MDL2 Assets" Content="&#xECC8;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFCFCFC"></Button>
                     <Button x:Name="btnDelete" Grid.Row="1" Grid.Column="7" Click="btnDelete_Click" FontFamily="Segoe MDL2 Assets" Content="&#xECC9;" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Center" Width="20" Height="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFCFCFC"></Button>
@@ -228,7 +228,7 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" Width="100"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" Width="150"/>
                             <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" Width="100"/>
                             <DataGridTextColumn Header="Avg. Price" Binding="{Binding Path=avgPrice}" Width="100"/>
                             <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" Width="100"/>
