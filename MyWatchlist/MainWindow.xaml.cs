@@ -117,8 +117,10 @@ namespace MyWatchlist
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddWatchlistStock();
-            GetWatchListStocks();
+            AddWindow addwindow = new AddWindow();
+            addwindow.ShowDialog();
+            //AddWatchlistStock();
+            //GetWatchListStocks();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)

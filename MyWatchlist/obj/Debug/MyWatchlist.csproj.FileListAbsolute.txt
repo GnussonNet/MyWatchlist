@@ -33,3 +33,6 @@ C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csproj.CopyComplete
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.exe
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.pdb
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csproj.CoreCompileInputs.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.g.cs
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.baml
