@@ -517,10 +517,10 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" Width="150"/>
-                            <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" Width="100"/>
-                            <DataGridTextColumn Header="Avg. Price" Binding="{Binding Path=avgPrice}" Width="100"/>
-                            <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" Width="100"/>
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" Width="*"/>
+                            <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" Width="*"/>
+                            <DataGridTextColumn Header="Average Price" Binding="{Binding Path=avgPrice}" Width="*"/>
+                            <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
 
