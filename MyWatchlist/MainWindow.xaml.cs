@@ -118,9 +118,8 @@ namespace MyWatchlist
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
             AddWindow addwindow = new AddWindow();
-            addwindow.ShowDialog();
-            //AddWatchlistStock();
-            //GetWatchListStocks();
+            if (addwindow.ShowDialog() == true)
+                GetWatchListStocks();
         }
 
         private void btnDelete_Click(object sender, RoutedEventArgs e)
@@ -159,7 +158,7 @@ namespace MyWatchlist
             GetWatchListStocks();
         }
 
-        void GetWatchlist()
+        public void GetWatchlist()
         {
             cbLists.Items.Clear();
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
@@ -175,7 +174,7 @@ namespace MyWatchlist
             }
         }
 
-        void GetWatchListStocks()
+        public void GetWatchListStocks()
         {
             //lstStocks.Items.Clear();
             var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
