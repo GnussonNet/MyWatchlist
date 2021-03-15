@@ -22,7 +22,7 @@ namespace MyWatchlist
     /// </summary>
     public partial class AddWindow : Window
     {
-        public AddWindow()
+        public AddWindow(int index)
         {
             InitializeComponent();
 
@@ -41,6 +41,7 @@ namespace MyWatchlist
             {
                 cbWL.Items.Add(watchlist.name);
             }
+            cbWL.SelectedIndex = index;
 
         }
 

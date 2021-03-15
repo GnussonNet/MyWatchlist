@@ -117,7 +117,7 @@ namespace MyWatchlist
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            AddWindow addwindow = new AddWindow();
+            AddWindow addwindow = new AddWindow(cbLists.SelectedIndex);
             if (addwindow.ShowDialog() == true)
                 GetWatchListStocks();
         }
