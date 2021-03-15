@@ -37,3 +37,6 @@ C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.g.c
 C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.baml
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.g.cs
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.baml
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csproj.CoreCompileInputs.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\UpdaterWindow.g.cs
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\UpdaterWindow.baml
