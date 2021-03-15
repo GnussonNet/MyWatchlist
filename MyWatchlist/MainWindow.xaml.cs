@@ -151,7 +151,8 @@ namespace MyWatchlist
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-
+            GetWatchlist();
+            GetWatchListStocks();
         }
 
         private void btnAddWL_Click(object sender, RoutedEventArgs e)
