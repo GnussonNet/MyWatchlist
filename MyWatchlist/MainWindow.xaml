@@ -259,7 +259,7 @@
         <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
     </Window.CommandBindings>
 
-    <Border x:Name="MainWindowBorder" BorderBrush="{DynamicResource ButtonBorder}" BorderThickness="2" >
+    <Border x:Name="MainWindowBorder" BorderBrush="{DynamicResource ButtonBorder}" BorderThickness="1" >
         <Grid x:Name="parentContainer" Background="{DynamicResource Background}">
 
             <Grid.RowDefinitions>

@@ -127,12 +127,25 @@ namespace MyWatchlist
             if (lstStocks.SelectedItem != null)
             {
                 WatchlistStocks stock = (WatchlistStocks)lstStocks.SelectedItems[0];
-                RemoveWatchlistStock(stock.ticker, stock.watchlist);
-                GetWatchListStocks();
+                if (MessageBox.Show("Are you sure you want to delete " + stock.name + " from " + stock.watchlist + "?", "MyWatchlist", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    RemoveWatchlistStock(stock.ticker, stock.watchlist);
+                    GetWatchListStocks();
+                }
             }
             else if (lstStocks.Items.Count == 0)
             {
-                cbLists.Items.Remove(cbLists.SelectedItem); 
+
+                if (MessageBox.Show("Are you sure you want to delete " + cbLists.SelectedItem.ToString() + "?", "MyWatchlist", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+                    var xdoc = XDocument.Load(xmlFilePath);
+
+                    xdoc.Root.Elements("WATCHLIST").Where(x =>
+                        x.Element("NAME").Value == cbLists.SelectedItem.ToString()).Single().Remove();
+                    xdoc.Save(xmlFilePath);
+                    GetWatchlist();
+                }
             }
         }
 
@@ -148,6 +161,7 @@ namespace MyWatchlist
                 AddWatchlist(txtNewList.Text);
                 GetWatchlist();
                 cbLists.SelectedIndex = cbLists.Items.Count - 1;
+                txtNewList.Text = string.Empty;
             }
         }
 
@@ -172,32 +186,39 @@ namespace MyWatchlist
             {
                 cbLists.Items.Add(watchlist.name);
             }
+
+            if (cbLists.Items.Count > 0)
+                cbLists.SelectedIndex = 0;
         }
 
         public void GetWatchListStocks()
         {
-            //lstStocks.Items.Clear();
-            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
-            var xdoc = XDocument.Load(xmlFilePath);
-
-            var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(x.Element("NAME").Value));
-
-            var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, x.Element("TICKER").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
-
-            wlStocks.Clear();
-
-            foreach (var stock in stocks)
+            if (cbLists.Items.Count > 0)
             {
-                if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
+                //lstStocks.Items.Clear();
+                var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+                var xdoc = XDocument.Load(xmlFilePath);
+
+                var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(x.Element("NAME").Value));
+
+                var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, x.Element("TICKER").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+
+                wlStocks.Clear();
+
+                foreach (var stock in stocks)
                 {
-                    //lstStocks.Items.Add(stock.name);
-                    wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist));
-                    lstStocks.ItemsSource = wlStocks;
-                    dgStocks.ItemsSource = wlStocks;
-                    dgStocks.Items.Refresh();
-                    lstStocks.Items.Refresh();
+                    if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
+                    {
+                        //lstStocks.Items.Add(stock.name);
+                        wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist));
+                        lstStocks.ItemsSource = wlStocks;
+                        dgStocks.ItemsSource = wlStocks;
+                        dgStocks.Items.Refresh();
+                        lstStocks.Items.Refresh();
+                    }
                 }
             }
+            lstStocks.Items.Refresh();
         }
 
         void AddWatchlist(string name)

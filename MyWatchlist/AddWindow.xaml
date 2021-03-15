@@ -239,7 +239,7 @@
         <CommandBinding Command="{x:Static SystemCommands.CloseWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Close" />
     </Window.CommandBindings>
 
-    <Border x:Name="MainWindowBorder" BorderBrush="{DynamicResource ButtonBorder}" BorderThickness="2" >
+    <Border x:Name="MainWindowBorder" BorderBrush="{DynamicResource ButtonBorder}" BorderThickness="1" >
         <Grid x:Name="parentContainer" Background="{DynamicResource Background}">
 
             <Grid.RowDefinitions>
@@ -261,7 +261,7 @@
                 <!--Caption buttons-->
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" >
                     <Button Style="{StaticResource CloseButtonStyle}" WindowChrome.IsHitTestVisibleInChrome="True" ToolTip="Close"
-                            Command="{x:Static SystemCommands.CloseWindowCommand}"/>
+                            Command="{x:Static SystemCommands.CloseWindowCommand}" IsTabStop="False"/>
                 </StackPanel>
             </Grid>
 
@@ -295,21 +295,21 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Name" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Padding="0,5,5,5"></Label>
-                <TextBox x:Name="txtName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" ></TextBox>
+                <TextBox x:Name="txtName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" TabIndex="0" ></TextBox>
 
                 <Label Content="Ticker" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Padding="0,5,5,5"></Label>
-                <TextBox x:Name="txtTicker" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" ></TextBox>
+                <TextBox x:Name="txtTicker" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" TabIndex="1" ></TextBox>
 
                 <Label Content="Average Price" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Padding="0,5,5,5"></Label>
-                <TextBox x:Name="txtAvgPrice" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" KeyDown="txtAvgPrice_KeyDown" ></TextBox>
+                <TextBox x:Name="txtAvgPrice" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" KeyDown="txtAvgPrice_KeyDown" TabIndex="2" ></TextBox>
 
                 <Label Content="Shares" Grid.Row="10" Grid.ColumnSpan="2" Grid.Column="1"  Padding="0,5,5,5"></Label>
-                <TextBox x:Name="txtShares" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" KeyDown="txtShares_KeyDown" ></TextBox>
+                <TextBox x:Name="txtShares" Grid.Row="11" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" KeyDown="txtShares_KeyDown" TabIndex="3" ></TextBox>
 
                 <Label Content="Watchlist" Grid.Row="13" Grid.Column="1" Grid.ColumnSpan="2" Padding="0,5,5,5"></Label>
-                <ComboBox x:Name="cbWL" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" SelectedIndex="0"/>
+                <ComboBox x:Name="cbWL" Style="{DynamicResource ComboBoxFlatStyle}" Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="2" SelectedIndex="0" TabIndex="4"/>
 
-                <Button x:Name="btnCancel" Grid.Row="16" Margin="0 0 5 0" Grid.Column="1" Content="Cancel" BorderThickness="0" Cursor="Hand" Foreground="{DynamicResource Background}" Click="btnCancel_Click">
+                <Button x:Name="btnCancel" Grid.Row="16" Margin="0 0 5 0" Grid.Column="1" Content="Cancel" BorderThickness="0" Cursor="Hand" Foreground="{DynamicResource Background}" Click="btnCancel_Click" TabIndex="5">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="#FFA70000"/>
@@ -330,7 +330,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button x:Name="btnAdd" Grid.Row="16" Margin="5 0 0 0" Grid.Column="2" Content="Add" BorderThickness="0" Cursor="Hand" Foreground="{DynamicResource Background}" Click="btnAdd_Click">
+                <Button x:Name="btnAdd" Grid.Row="16" Margin="5 0 0 0" Grid.Column="2" Content="Add" BorderThickness="0" Cursor="Hand" Foreground="{DynamicResource Background}" Click="btnAdd_Click" TabIndex="6">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}">
                             <Setter Property="Background" Value="{DynamicResource Header}"/>
