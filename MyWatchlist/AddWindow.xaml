@@ -38,7 +38,7 @@
             <SolidColorBrush x:Key="Layer9" Color="#28FFFFFF" />
 
             <!--Base style for title bar buttons-->
-            <Style x:Key="CaptionButtonStyle" TargetType="Button">
+            <Style x:Key="CaptionButtonStyleClose" TargetType="Button">
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Button">
@@ -49,7 +49,7 @@
                             </Grid>
                             <ControlTemplate.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
-                                    <Setter TargetName="LayoutRoot" Property="Background" Value="{DynamicResource ButtonHover}"/>
+                                    <Setter TargetName="LayoutRoot" Property="Background" Value="#E81123"/>
                                     <Setter TargetName="txt" Property="Foreground" Value="{DynamicResource TextHigh}"/>
                                 </Trigger>
                             </ControlTemplate.Triggers>
@@ -58,8 +58,9 @@
                 </Setter>
             </Style>
 
+
             <!--Close-->
-            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyle}">
+            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource CaptionButtonStyleClose}">
                 <Setter Property="Content" Value="&#xE8BB;"/>
             </Style>
 
