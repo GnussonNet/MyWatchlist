@@ -451,6 +451,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto" />
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -543,8 +544,15 @@
                             <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" Width="*"/>
                             <DataGridTextColumn Header="Average Price" Binding="{Binding Path=avgPrice}" Width="*"/>
                             <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" Width="*"/>
+                            <DataGridTextColumn Header="Current Price" Binding="{Binding Path=currentPrice}" Width="*"/>
+                            <DataGridTextColumn Header="Gain Today (kr)" Binding="{Binding Path=todayGainV}" Width="*"/>
+                            <DataGridTextColumn Header="Gain Today (%)" Binding="{Binding Path=todayGainP}" Width="*"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <Grid Grid.Row="2" Grid.ColumnSpan="2" Margin="-10 0">
+                        <Label x:Name="lblOmx" Content="Test" Background="{DynamicResource Header}"></Label>
+                    </Grid>
 
                 </Grid>
             </Grid>

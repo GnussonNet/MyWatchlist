@@ -37,3 +37,11 @@ C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.bam
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.g.cs
 C:\Users\02fima19\Documents\Github\MyWatchlist\MyWatchlist\obj\Debug\AddWindow.baml
 C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csproj.CoreCompileInputs.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csprojAssemblyReference.cache
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\CsvHelper.dll
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Flurl.dll
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Flurl.Http.dll
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\YahooFinanceApi.dll
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\CsvHelper.xml
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Flurl.xml
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Flurl.Http.xml

@@ -296,10 +296,10 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Content="Name" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2"  Padding="0,5,5,5"></Label>
-                <TextBox x:Name="txtName" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" TabIndex="0" ></TextBox>
+                <TextBox x:Name="txtName" IsEnabled="False" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" TabIndex="0" ></TextBox>
 
                 <Label Content="Ticker" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Padding="0,5,5,5"></Label>
-                <TextBox x:Name="txtTicker" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" TabIndex="1" ></TextBox>
+                <TextBox x:Name="txtTicker" Grid.Row="5" Grid.Column="1" CharacterCasing="Upper" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" TabIndex="1" LostFocus="txtTicker_LostFocus" TextChanged="txtTicker_TextChanged" ></TextBox>
 
                 <Label Content="Average Price" Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Padding="0,5,5,5"></Label>
                 <TextBox x:Name="txtAvgPrice" Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Margin="0 0 0 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" KeyDown="txtAvgPrice_KeyDown" TabIndex="2" ></TextBox>
@@ -347,6 +347,9 @@
                             <Style.Triggers>
                                 <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#0A63AA"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="false">
+                                    <Setter Property="Background" Value="#FF767676"/>
                                 </Trigger>
                             </Style.Triggers>
                         </Style>

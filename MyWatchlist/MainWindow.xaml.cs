@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Xml;
 using System.Xml.Linq;
+using YahooFinanceApi;
 
 namespace MyWatchlist
 {
@@ -15,7 +18,6 @@ namespace MyWatchlist
     /// </summary>
     public partial class MainWindow : Window
     {
-
         List<WatchlistStocks> wlStocks = new List<WatchlistStocks>();
 
         public MainWindow()
@@ -38,10 +40,9 @@ namespace MyWatchlist
                 //MessageBox.Show("File created!");
             }
             else
-            {
-                //MessageBox.Show("File exists!");
                 document.Load(xmlFilePath + "\\data.xml");
-            }
+
+            GetIndexPrice();
             GetWatchlist();
 
         }
@@ -141,8 +142,8 @@ namespace MyWatchlist
 
         private void btnRefresh_Click(object sender, RoutedEventArgs e)
         {
-            GetWatchlist();
-            GetWatchListStocks();
+            //GetWatchlist();
+            //GetWatchListStocks();
         }
 
         private void btnAddWL_Click(object sender, RoutedEventArgs e)
@@ -161,6 +162,14 @@ namespace MyWatchlist
             dgStocks.Items.Refresh();
             lstStocks.Items.Refresh();
             GetWatchListStocks();
+        }
+
+        async void GetIndexPrice()
+        {
+            //var securities = await Yahoo.Symbols("SNES").Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent, Field.LongName).QueryAsync();
+            //var indexData = securities["SNES"];
+            //MessageBox.Show(indexData.LongName);
+            //lblOmx.Content = "OMX30: " + indexData.PostMarketPrice;
         }
 
         public void GetWatchlist()
@@ -182,7 +191,7 @@ namespace MyWatchlist
                 cbLists.SelectedIndex = 0;
         }
 
-        public void GetWatchListStocks()
+        public async void GetWatchListStocks()
         {
             if (cbLists.Items.Count > 0)
             {
@@ -201,7 +210,9 @@ namespace MyWatchlist
                     if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
                     {
                         //lstStocks.Items.Add(stock.name);
-                        wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist));
+                        var securities = await Yahoo.Symbols(stock.ticker).Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent).QueryAsync();
+                        var stockData = securities[stock.ticker];
+                        wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist, stockData.RegularMarketPrice, stockData.RegularMarketChange, stockData.RegularMarketChangePercent));
                         lstStocks.ItemsSource = wlStocks;
                         dgStocks.ItemsSource = wlStocks;
                         dgStocks.Items.Refresh();
@@ -219,16 +230,6 @@ namespace MyWatchlist
 
             var xelement = new XElement("WATCHLIST", new XElement("NAME", name), new XElement("STOCKS"));
             xdoc.Root.Add(xelement);
-            xdoc.Save(xmlFilePath);
-        }
-
-        void AddWatchlistStock()
-        {
-            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
-            var xdoc = XDocument.Load(xmlFilePath);
-
-            var xelement = new XElement(new XElement("STOCK", new XAttribute("list", cbLists.SelectedItem.ToString()), new XElement("NAME", "Zaptec"), new XElement("TICKER", "ZAP"), new XElement("AVGPRICE", "52,13"), new XElement("SHARES", "30")));
-            xdoc.Root.Elements("WATCHLIST").Where(e => e.Element("NAME").Value == cbLists.SelectedItem.ToString()).Single().Element("STOCKS").Add(xelement);
             xdoc.Save(xmlFilePath);
         }
 
@@ -265,6 +266,9 @@ namespace MyWatchlist
         public double avgPrice { get; set; }
         public int shares { get; set; }
         public string watchlist { get; set; }
+        public double currentPrice { get; set; }
+        public double todayGainV { get; set; }
+        public double todayGainP { get; set; }
 
         public WatchlistStocks(string _name, string _ticker, double _avgPrice, int _shares, string _watchlist)
         {
@@ -273,6 +277,18 @@ namespace MyWatchlist
             avgPrice = _avgPrice;
             shares = _shares;
             watchlist = _watchlist;
+        }
+
+        public WatchlistStocks(string _name, string _ticker, double _avgPrice, int _shares, string _watchlist, double _currentPrice, double _todayGainV, double _todayGainP)
+        {
+            name = _name;
+            ticker = _ticker;
+            avgPrice = _avgPrice;
+            shares = _shares;
+            watchlist = _watchlist;
+            currentPrice = _currentPrice;
+            todayGainV = _todayGainV;
+            todayGainP = _todayGainP;
         }
 
         public override string ToString()

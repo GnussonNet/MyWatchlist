@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using YahooFinanceApi;
 
 namespace MyWatchlist
 {
@@ -22,6 +23,24 @@ namespace MyWatchlist
     /// </summary>
     public partial class AddWindow : Window
     {
+
+        private Boolean _validTicker;
+        public Boolean ValidTicker
+        {
+            get { return _validTicker; }
+            set
+            {
+                _validTicker = value;
+                if (_validTicker)
+                    btnAdd.IsEnabled = true;
+                else
+                {
+                    btnAdd.IsEnabled = false;
+                    txtName.Text = string.Empty;
+                }
+            }
+        }
+
         public AddWindow(int index)
         {
             InitializeComponent();
@@ -59,16 +78,28 @@ namespace MyWatchlist
         }
         #endregion
 
-        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        private async void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
-            var xdoc = XDocument.Load(xmlFilePath);
+            try
+            {
+                var securities = await Yahoo.Symbols(txtTicker.Text).Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent, Field.LongName).QueryAsync();
+                var indexData = securities[txtTicker.Text];
+                txtName.Text = indexData.LongName;
+                ValidTicker = true;
 
-            var xelement = new XElement(new XElement("STOCK", new XAttribute("list", cbWL.SelectedItem.ToString()), new XElement("NAME", txtName.Text), new XElement("TICKER", txtTicker.Text), new XElement("AVGPRICE", txtAvgPrice.Text), new XElement("SHARES", txtShares.Text)));
-            xdoc.Root.Elements("WATCHLIST").Where(x => x.Element("NAME").Value == cbWL.SelectedItem.ToString()).Single().Element("STOCKS").Add(xelement);
-            xdoc.Save(xmlFilePath);
+                var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
+                var xdoc = XDocument.Load(xmlFilePath);
 
-            this.DialogResult = true;
+                var xelement = new XElement(new XElement("STOCK", new XAttribute("list", cbWL.SelectedItem.ToString()), new XElement("NAME", txtName.Text), new XElement("TICKER", txtTicker.Text), new XElement("AVGPRICE", txtAvgPrice.Text), new XElement("SHARES", txtShares.Text)));
+                xdoc.Root.Elements("WATCHLIST").Where(x => x.Element("NAME").Value == cbWL.SelectedItem.ToString()).Single().Element("STOCKS").Add(xelement);
+                xdoc.Save(xmlFilePath);
+
+                this.DialogResult = true;
+            }
+            catch (Exception)
+            {
+                ValidTicker = false;
+            }
         }
 
         private void btnCancel_Click(object sender, RoutedEventArgs e)
@@ -97,6 +128,36 @@ namespace MyWatchlist
                 e.Handled = false;
             else
                 e.Handled = true;
+        }
+
+        private async void txtTicker_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var securities = await Yahoo.Symbols(txtTicker.Text).Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent, Field.LongName).QueryAsync();
+                var indexData = securities[txtTicker.Text];
+                txtName.Text = indexData.LongName;
+                ValidTicker = true;
+            }
+            catch (Exception)
+            {
+                ValidTicker = false;
+            }
+        }
+
+        private async void txtTicker_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                var securities = await Yahoo.Symbols(txtTicker.Text).Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent, Field.LongName).QueryAsync();
+                var indexData = securities[txtTicker.Text];
+                txtName.Text = indexData.LongName;
+                ValidTicker = true;
+            }
+            catch (Exception)
+            {
+                ValidTicker = false;
+            }
         }
     }
 }
