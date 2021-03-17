@@ -90,11 +90,20 @@ namespace MyWatchlist
                 var xmlFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "MyWatchlist\\data.xml");
                 var xdoc = XDocument.Load(xmlFilePath);
 
-                var xelement = new XElement(new XElement("STOCK", new XAttribute("list", cbWL.SelectedItem.ToString()), new XElement("NAME", txtName.Text), new XElement("TICKER", txtTicker.Text), new XElement("AVGPRICE", txtAvgPrice.Text), new XElement("SHARES", txtShares.Text)));
-                xdoc.Root.Elements("WATCHLIST").Where(x => x.Element("NAME").Value == cbWL.SelectedItem.ToString()).Single().Element("STOCKS").Add(xelement);
-                xdoc.Save(xmlFilePath);
+                var hasElement = xdoc.Root.Elements("WATCHLIST").Where(y =>
+                y.Element("NAME").Value == cbWL.SelectedItem.ToString()).Single()
+                .Element("STOCKS").Elements("STOCK").Any(yy => yy.Element("TICKER").Value == txtTicker.Text);
 
-                this.DialogResult = true;
+                if (!hasElement)
+                {
+                    var xelement = new XElement(new XElement("STOCK", new XAttribute("list", cbWL.SelectedItem.ToString()), new XElement("NAME", txtName.Text), new XElement("TICKER", txtTicker.Text), new XElement("AVGPRICE", txtAvgPrice.Text), new XElement("SHARES", txtShares.Text)));
+                    xdoc.Root.Elements("WATCHLIST").Where(x => x.Element("NAME").Value == cbWL.SelectedItem.ToString()).Single().Element("STOCKS").Add(xelement);
+                    xdoc.Save(xmlFilePath);
+
+                    this.DialogResult = true;
+                }
+                else
+                    MessageBox.Show(txtTicker.Text + " already exists in " + cbWL.SelectedItem.ToString() + "!", "MyWatchlist", MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception)
             {

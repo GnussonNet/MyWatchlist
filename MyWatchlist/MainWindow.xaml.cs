@@ -42,7 +42,7 @@ namespace MyWatchlist
             else
                 document.Load(xmlFilePath + "\\data.xml");
 
-            GetIndexPrice();
+            //GetIndexPrice();
             GetWatchlist();
 
         }
@@ -164,18 +164,18 @@ namespace MyWatchlist
             GetWatchListStocks();
         }
 
-        async void GetIndexPrice()
-        {
-            var securities = await Yahoo.Symbols("^OMX", "^OMXSPI", "^IXIC", "^GSPC").Fields(Field.RegularMarketPrice).QueryAsync();
-            var omxData = securities["^OMX"];
-            var omxspiData = securities["^OMXSPI"];
-            var nasdaqData = securities["^IXIC"];
-            var spData = securities["^GSPC"];
-            lblOmx.Content = "OMXS: " + omxData.RegularMarketPrice;
-            lblOmxspi.Content = "OMXSPI: " + omxspiData.RegularMarketPrice;
-            lblNasdaq.Content = "S&P 500: " + nasdaqData.RegularMarketPrice;
-            lblSp500.Content = "Nasdaq: " + spData.RegularMarketPrice;
-        }
+        //async void GetIndexPrice()
+        //{
+        //    var securities = await Yahoo.Symbols("^OMX", "^OMXSPI", "^IXIC", "^GSPC").Fields(Field.RegularMarketPrice).QueryAsync();
+        //    var omxData = securities["^OMX"];
+        //    var omxspiData = securities["^OMXSPI"];
+        //    var nasdaqData = securities["^IXIC"];
+        //    var spData = securities["^GSPC"];
+        //    lblOmx.Content = "OMXS: " + omxData.RegularMarketPrice;
+        //    lblOmxspi.Content = "OMXSPI: " + omxspiData.RegularMarketPrice;
+        //    lblNasdaq.Content = "S&P 500: " + nasdaqData.RegularMarketPrice;
+        //    lblSp500.Content = "Nasdaq: " + spData.RegularMarketPrice;
+        //}
 
         public void GetWatchlist()
         {
@@ -292,8 +292,8 @@ namespace MyWatchlist
             shares = _shares;
             watchlist = _watchlist;
             currentPrice = _currentPrice;
-            todayGainV = _todayGainV;
-            todayGainP = _todayGainP;
+            todayGainV = Math.Round(_todayGainV, 2);
+            todayGainP = Math.Round(_todayGainP, 2);
         }
 
         public override string ToString()
