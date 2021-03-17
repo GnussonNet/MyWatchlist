@@ -166,10 +166,15 @@ namespace MyWatchlist
 
         async void GetIndexPrice()
         {
-            //var securities = await Yahoo.Symbols("SNES").Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent, Field.LongName).QueryAsync();
-            //var indexData = securities["SNES"];
-            //MessageBox.Show(indexData.LongName);
-            //lblOmx.Content = "OMX30: " + indexData.PostMarketPrice;
+            var securities = await Yahoo.Symbols("^OMX", "^OMXSPI", "^IXIC", "^GSPC").Fields(Field.RegularMarketPrice).QueryAsync();
+            var omxData = securities["^OMX"];
+            var omxspiData = securities["^OMXSPI"];
+            var nasdaqData = securities["^IXIC"];
+            var spData = securities["^GSPC"];
+            lblOmx.Content = "OMXS: " + omxData.RegularMarketPrice;
+            lblOmxspi.Content = "OMXSPI: " + omxspiData.RegularMarketPrice;
+            lblNasdaq.Content = "S&P 500: " + nasdaqData.RegularMarketPrice;
+            lblSp500.Content = "Nasdaq: " + spData.RegularMarketPrice;
         }
 
         public void GetWatchlist()
