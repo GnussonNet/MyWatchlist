@@ -6,4 +6,4 @@
  * Make changed to a temporary file. Press save to write to original file
 
 ## Bugs
-* Datagrid do not shows "," on avgPrice column
+* Datagrid select color
