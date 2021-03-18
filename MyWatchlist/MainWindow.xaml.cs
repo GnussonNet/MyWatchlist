@@ -215,7 +215,7 @@ namespace MyWatchlist
                     if (stock.watchlist.ToString() == cbLists.SelectedItem.ToString())
                     {
                         //lstStocks.Items.Add(stock.name);
-                        var securities = await Yahoo.Symbols(stock.ticker).Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent).QueryAsync();
+                        var securities = await Yahoo.Symbols(stock.ticker).Fields(Field.Symbol, Field.RegularMarketPrice, Field.RegularMarketChange, Field.RegularMarketChangePercent, Field.Currency).QueryAsync();
                         var stockData = securities[stock.ticker];
                         wlStocks.Add(new WatchlistStocks(stock.name, stock.ticker, stock.avgPrice, stock.shares, stock.watchlist, stockData.RegularMarketPrice, stockData.RegularMarketChange, stockData.RegularMarketChangePercent));
                         lstStocks.ItemsSource = wlStocks;
