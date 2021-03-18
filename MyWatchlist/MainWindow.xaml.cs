@@ -206,7 +206,7 @@ namespace MyWatchlist
 
                 var watchlists = xdoc.Root.Descendants("WATCHLIST").Select(x => new Watchlist(x.Element("NAME").Value));
 
-                var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, x.Element("TICKER").Value, double.Parse(x.Element("AVGPRICE").Value), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
+                var stocks = xdoc.Root.Descendants("STOCK").Select(x => new WatchlistStocks(x.Element("NAME").Value, x.Element("TICKER").Value, double.Parse(x.Element("AVGPRICE").Value.Replace(",", ".")), int.Parse(x.Element("SHARES").Value), x.Attribute("list").Value));
 
                 wlStocks.Clear();
 
@@ -225,6 +225,7 @@ namespace MyWatchlist
                     }
                 }
             }
+            dgStocks.Items.Refresh();
             lstStocks.Items.Refresh();
         }
 

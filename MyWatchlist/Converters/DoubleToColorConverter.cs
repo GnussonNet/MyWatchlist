@@ -9,13 +9,15 @@ namespace MyWatchlist.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Color header = Color.FromRgb(0, 93, 167);
-            SolidColorBrush headerBrush = new SolidColorBrush(header);
+            Color blue = Color.FromRgb(0, 93, 167);
+            Color red = Color.FromRgb(167, 0, 0);
+            SolidColorBrush blueBrush = new SolidColorBrush(blue);
+            SolidColorBrush redBrush = new SolidColorBrush(red);
             double num = (double)value;
             if (num < 0)
-                return Brushes.Red;
+                return redBrush;
             else if (num > 0)
-                return headerBrush;
+                return blueBrush;
             else
                 return Brushes.Black;
         }

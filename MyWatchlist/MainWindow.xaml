@@ -26,7 +26,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dictionaries/DefaultDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <Converters:DoubleToColorConverter x:Key="valueConverter" />
+            <Converters:DoubleToColorConverter x:Key="doubleToColorConverter" />
         </ResourceDictionary>
     </Window.Resources>
 
@@ -287,7 +287,7 @@
                     <GridSplitter Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="#7F005DA7"/>
 
                     <!--Datagrid-->
-                    <DataGrid x:Name="dgStocks" IsEnabled="False" HorizontalGridLinesBrush="{DynamicResource Header}" VerticalGridLinesBrush="{DynamicResource Header}" RowHeaderWidth="0" AutoGenerateColumns="False"  Grid.Row="1" Grid.Column="1" Margin="10 10 0 10" BorderBrush="{DynamicResource Header}" BorderThickness="0" Background="{DynamicResource Background}" SelectedIndex="0">
+                    <DataGrid x:Name="dgStocks" HorizontalGridLinesBrush="{DynamicResource Header}" VerticalGridLinesBrush="{DynamicResource Header}" RowHeaderWidth="0" AutoGenerateColumns="False"  Grid.Row="1" Grid.Column="1" Margin="10 10 0 10" BorderBrush="{DynamicResource Header}" BorderThickness="0" Background="{DynamicResource Background}" SelectedIndex="0">
                         <DataGrid.Resources>
                             <Style BasedOn="{StaticResource {x:Type DataGridColumnHeader}}" TargetType="{x:Type DataGridColumnHeader}" >
                                 <Setter Property="Background" Value="{DynamicResource Header}" />
@@ -301,22 +301,22 @@
                             </Style>
                         </DataGrid.Resources>
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" Width="*"/>
-                            <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" Width="*"/>
-                            <DataGridTextColumn Header="Average Price" Binding="{Binding Path=avgPrice}" Width="*"/>
-                            <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" Width="*"/>
-                            <DataGridTextColumn Header="Current Price" Binding="{Binding Path=currentPrice}" Width="*"/>
-                            <DataGridTextColumn Header="Gain Today (kr)" Binding="{Binding Path=todayGainV}" Width="*">
+                            <DataGridTextColumn Header="Name" Binding="{Binding Path=name}" MinWidth="50" Width="auto" />
+                            <DataGridTextColumn Header="Ticker" Binding="{Binding Path=ticker}" MinWidth="50" Width="auto"/>
+                            <DataGridTextColumn Header="Average Price" Binding="{Binding Path=avgPrice}" Width="85"/>
+                            <DataGridTextColumn Header="Shares" Binding="{Binding Path=shares}" MinWidth="50" Width="auto"/>
+                            <DataGridTextColumn Header="Current Price" Binding="{Binding Path=currentPrice}" MinWidth="85" Width="auto"/>
+                            <DataGridTextColumn Header="Gain Today (kr)" Binding="{Binding Path=todayGainV}" MinWidth="95" Width="auto">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{Binding Path=todayGainV, Converter={StaticResource valueConverter}}" />
+                                        <Setter Property="Foreground" Value="{Binding Path=todayGainV, Converter={StaticResource doubleToColorConverter}}" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>
-                            <DataGridTextColumn Header="Gain Today (%)" Binding="{Binding Path=todayGainP}" Width="*">
+                            <DataGridTextColumn Header="Gain Today (%)" Binding="{Binding Path=todayGainP}" MinWidth="96" Width="auto">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
-                                        <Setter Property="Foreground" Value="{Binding Path=todayGainP, Converter={StaticResource valueConverter}}" />
+                                        <Setter Property="Foreground" Value="{Binding Path=todayGainP, Converter={StaticResource doubleToColorConverter}}" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </DataGridTextColumn>

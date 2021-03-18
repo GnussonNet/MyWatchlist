@@ -1,0 +1,20 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:MyWatchlist">
+
+    <SolidColorBrush x:Key="Background" Color="#fff" />
+    <SolidColorBrush x:Key="Header" Color="#005DA7" />
+    <SolidColorBrush x:Key="TextHigh" Color="#DDFFFFFF" />
+    <SolidColorBrush x:Key="TextLow" Color="#99FFFFFF" />
+    <SolidColorBrush x:Key="TextDisable" Color="#60FFFFFF" />
+    <SolidColorBrush x:Key="ButtonBorder" Color="#FF373737" />
+    <SolidColorBrush x:Key="ButtonHover" Color="#0AFFFFFF" />
+    <SolidColorBrush x:Key="ButtonRed" Color="#FFA70000" />
+
+    <SolidColorBrush x:Key="ComboBoxNormalBorderBrush" Color="#ABADB3" />
+    <SolidColorBrush x:Key="ComboBoxNormalBackgroundBrush" Color="#fff" />
+    <SolidColorBrush x:Key="ComboBoxDisabledForegroundBrush" Color="#888" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBackgroundBrush" Color="#eee" />
+    <SolidColorBrush x:Key="ComboBoxDisabledBorderBrush" Color="#888" />
+
+</ResourceDictionary>

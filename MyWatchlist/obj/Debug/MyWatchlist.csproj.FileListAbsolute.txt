@@ -46,3 +46,5 @@ C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Flurl.xml
 C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\bin\Debug\Flurl.Http.xml
 C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\Dictionaries\DefaultDictionary.baml
 C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\Dictionaries\ColorSchemeDictionary.baml
+C:\Users\Gnusse\Documents\GitHub\MyWatchlist\MyWatchlist\obj\Debug\MyWatchlist.csprojAssemblyReference.cache
