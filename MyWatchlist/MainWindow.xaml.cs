@@ -173,26 +173,6 @@ namespace MyWatchlist
         #endregion
 
         #region -- Methods --
-
-        // Get index prices and Market change percent
-        async void GetIndexPrice()
-        {
-            // Declare tickers and fields
-            var securities = await Yahoo.Symbols("^OMX", "^OMXSPI", "^IXIC", "^GSPC").Fields(Field.RegularMarketPrice, Field.RegularMarketChangePercent).QueryAsync();
-
-            // Declare every index 
-            var omxData = securities["^OMX"];
-            var omxspiData = securities["^OMXSPI"];
-            var nasdaqData = securities["^IXIC"];
-            var spData = securities["^GSPC"];
-
-            // Add to each lbl
-            lblOmx.Content = "OMXS: " + omxData.RegularMarketPrice + "(" + Math.Round(omxData.RegularMarketChangePercent, 2) +"%)";
-            lblOmxspi.Content = "OMXSPI: " + omxspiData.RegularMarketPrice + "(" + Math.Round(omxspiData.RegularMarketChangePercent, 2) + "%)";
-            lblNasdaq.Content = "S&P 500: " + nasdaqData.RegularMarketPrice + "(" + Math.Round(nasdaqData.RegularMarketChangePercent, 2) + "%)";
-            lblSp500.Content = "Nasdaq: " + spData.RegularMarketPrice + "(" + Math.Round(spData.RegularMarketChangePercent, 2) + "%)";
-        }
-
         // Get watchlists
         public void GetWatchlist()
         {
@@ -290,6 +270,25 @@ namespace MyWatchlist
 
             // Save xml file
             xdoc.Save(xmlFileFullPath);
+        }
+
+        // Get index prices and Market change percent
+        async void GetIndexPrice()
+        {
+            // Declare tickers and fields
+            var securities = await Yahoo.Symbols("^OMX", "^OMXSPI", "^IXIC", "^GSPC").Fields(Field.RegularMarketPrice, Field.RegularMarketChangePercent).QueryAsync();
+
+            // Declare every index 
+            var omxData = securities["^OMX"];
+            var omxspiData = securities["^OMXSPI"];
+            var nasdaqData = securities["^IXIC"];
+            var spData = securities["^GSPC"];
+
+            // Add to each lbl
+            lblOmx.Content = "OMXS: " + omxData.RegularMarketPrice + "(" + Math.Round(omxData.RegularMarketChangePercent, 2) + "%)";
+            lblOmxspi.Content = "OMXSPI: " + omxspiData.RegularMarketPrice + "(" + Math.Round(omxspiData.RegularMarketChangePercent, 2) + "%)";
+            lblNasdaq.Content = "S&P 500: " + nasdaqData.RegularMarketPrice + "(" + Math.Round(nasdaqData.RegularMarketChangePercent, 2) + "%)";
+            lblSp500.Content = "Nasdaq: " + spData.RegularMarketPrice + "(" + Math.Round(spData.RegularMarketChangePercent, 2) + "%)";
         }
         #endregion
 

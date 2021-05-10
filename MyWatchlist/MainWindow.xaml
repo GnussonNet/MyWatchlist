@@ -22,6 +22,7 @@
 
     <Window.Resources>
 
+        <!--Converters and Dictionaries-->
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dictionaries/DefaultDictionary.xaml" />
@@ -38,13 +39,13 @@
         <CommandBinding Command="{x:Static SystemCommands.RestoreWindowCommand}" CanExecute="CommandBinding_CanExecute" Executed="CommandBinding_Executed_Restore" />
     </Window.CommandBindings>
 
+    <!--Border around the main window-->
     <Border x:Name="MainWindowBorder" BorderBrush="{DynamicResource ButtonBorder}" BorderThickness="1" >
         <Grid x:Name="parentContainer" Background="{DynamicResource Background}">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height ="Auto"/>
                 <RowDefinition Height ="*"/>
-                <!--<RowDefinition Height ="30"/>-->
             </Grid.RowDefinitions>
 
             <!--Title bar-->
@@ -73,6 +74,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
+                <!--Toolbox-->
                 <Grid Background="{DynamicResource Header}" Grid.ColumnSpan="2">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
@@ -83,6 +85,8 @@
                         <ColumnDefinition Width="32px" />
                         <ColumnDefinition Width="32px" />
                     </Grid.ColumnDefinitions>
+                    
+                    <!--Add button-->
                     <Button Grid.Column="1" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE710;" FontSize="16" Foreground="{DynamicResource Background}" Cursor="Hand" Click="btnAdd_Click" >
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -104,6 +108,8 @@
                             </Style>
                         </Button.Style>
                     </Button>
+                    
+                    <!--Remove button-->
                     <Button Grid.Column="2" BorderThickness="0" FontFamily="Segoe MDL2 Assets" Content="&#xE74D;" FontSize="16" Foreground="{DynamicResource Background}" Cursor="Hand" Click="btnDelete_Click">
                         <Button.Style>
                             <Style TargetType="{x:Type Button}">
@@ -126,6 +132,8 @@
                         </Button.Style>
                     </Button>
                 </Grid>
+                
+                <!--App area-->
                 <Grid Grid.Row="1" Margin="10 0 10 0" Grid.ColumnSpan="2">
 
                     <Grid.RowDefinitions>
@@ -139,6 +147,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <!--Side bar-->
                     <Grid Grid.Row="1" Margin="0 0 10 0">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="auto" />
@@ -160,6 +169,7 @@
                             <Label Content="New Watchlist" Grid.ColumnSpan="2" Padding="0,5,5,5"></Label>
 
                             <TextBox x:Name="txtNewList" Grid.Row="1" Margin="0 0 5 0" BorderThickness="2" SelectionBrush="{DynamicResource Header}" Padding="4" ></TextBox>
+                            
                             <Button x:Name="btnAddWL" Grid.Row="1" Margin="5 0 0 0" Grid.Column="1" Content="Add" BorderThickness="0" Click="btnAddWL_Click" Cursor="Hand" Foreground="{DynamicResource Background}">
                                 <Button.Style>
                                     <Style TargetType="{x:Type Button}">
@@ -202,6 +212,7 @@
 
                     </Grid>
 
+                    <!--Grid splitter--> 
                     <GridSplitter Grid.Row="1" Grid.Column="0" BorderThickness="1" BorderBrush="#7F005DA7"/>
 
                     <!--Datagrid-->
@@ -241,6 +252,7 @@
                         </DataGrid.Columns>
                     </DataGrid>
 
+                    <!--Statusbar-->
                     <Grid Grid.Row="2" Grid.ColumnSpan="2" Height="26" Margin="-10 0">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
